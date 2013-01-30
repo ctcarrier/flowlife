@@ -1,3 +1,5 @@
+import com.typesafe.startscript.StartScriptPlugin
+
 organization := "simplyoverkill"
 
 name := "mashqwest"
@@ -7,6 +9,8 @@ version := "0.1.0-SNAPSHOT"
 scalaVersion := "2.9.2"
 
 seq(Revolver.settings: _*)
+
+seq(StartScriptPlugin.startScriptForClassesSettings: _*)
 
 javaOptions in Revolver.reStart += "-Dakka.mode=dev"
 
