@@ -23,7 +23,7 @@ object GeoDemoInitializer extends App with SprayCanHttpServerApp with Logging {
   val config = ConfigFactory.load()
 
   val host = "0.0.0.0"
-  val port = Option(System.getenv("PORT")).getOrElse("8080").toInt
+  val port = Properties.envOrElse("PORT", "8080").toInt
 
   val mongoUrl = config.getString("mongodb.url")
   val mongoDbName = config.getString("mongodb.database")
