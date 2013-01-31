@@ -49,7 +49,7 @@ object GeoDemoInitializer extends App with SprayCanHttpServerApp with Logging {
   // (but several servers and/or clients can share one)
   //override val ioBridge = IOExtension(system).ioBridge
 
-  newHttpServer(locationHandler) ! Bind(interface = "localhost", port = 8080)
+  newHttpServer(locationHandler) ! Bind(interface = host, port = port)
 
 }
 
