@@ -16,7 +16,7 @@ import com.mongodb.BasicDBList
 trait LocationDao {
 
   def saveLocation(l: Location): Location
-  def getNearbyLocations(distance: Int, lat: Int, long: Int): List[Location]
+  def getNearbyLocations(distance: Int, lat: Double, long: Double): List[Location]
 
 }
 
@@ -31,14 +31,14 @@ class MongoLocationDao(defaultCollection: MongoCollection) extends LocationDao w
     toReturn
   }
 
-  def getNearbyLocations(distance: Int, lat: Int, long: Int): List[Location] = {
+  def getNearbyLocations(distance: Int, lat: Double, long: Double): List[Location] = {
     logger.info("In DAO")
 
     val query = MongoDBObject("location" -> MongoDBObject("$near" -> (long, lat), "$maxDistance" -> 1))
     val res = defaultCollection.find(query).map(f => {
       val loc: List[Any] = f.as[BasicDBList]("location").toList
 
-      Location(f.getAs[String]("_id"), f.getAs[String]("name").getOrElse(""), loc(0).asInstanceOf[Int], loc(1).asInstanceOf[Int])
+      Location(f.getAs[String]("_id"), f.getAs[String]("name").getOrElse(""), loc(1).asInstanceOf[Double], loc(0).asInstanceOf[Double])
       //Location(Some("AAA"), "test", 1, 1)
     })
 

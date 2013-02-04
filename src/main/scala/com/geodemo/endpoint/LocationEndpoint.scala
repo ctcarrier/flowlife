@@ -44,7 +44,7 @@ trait LocationEndpoint extends Actor with HttpService with LiftJsonSupport with 
     } ~
     path("nearbyLocations"){
       get {
-        parameters("lat".as[Int], "long".as[Int]) {
+        parameters("lat".as[Double], "long".as[Double]) {
           getNearbyLocations
         }
       }
@@ -58,7 +58,7 @@ trait LocationEndpoint extends Actor with HttpService with LiftJsonSupport with 
     complete(loc.toString)
   }
 
-  def getNearbyLocations: (Int, Int) => Route = {(lat, long) =>
+  def getNearbyLocations: (Double, Double) => Route = {(lat, long) =>
     val res = dao.getNearbyLocations(5, lat, long)
     complete(res)
   }

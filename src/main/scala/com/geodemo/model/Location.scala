@@ -8,4 +8,4 @@ import com.mongodb.casbah.commons.MongoDBObject
  */
 
 
-case class Location(_id: Option[String], name: String, lat: Int, long: Int)
+case class Location(_id: Option[String], name: String, lat: Double, long: Double)
