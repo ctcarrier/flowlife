@@ -30,9 +30,9 @@ object GeoDemoInitializer extends App with SprayCanHttpServerApp with Logging {
 
 //  val urlList = mongoUrl.split(",").toList.map(new ServerAddress(_))
 
-  val MongoSettings(db) = Properties.envOrNone("MONGOHQ_URL")
+  val MongoSettings(db) = Some("mongodb://admin:koti3342@ds051007.mongolab.com:51007/heroku_app11453919")
 
-  val locationCollection = db(config.getString("geodemo.location.collection"))
+  val locationCollection = db(config.getString("mashqwest.location.collection"))
 
   val locationDao = new MongoLocationDao(locationCollection)
   // ///////////// INDEXES for collections go here (include all lookup fields)
