@@ -40,8 +40,9 @@ class MongoLocationDao(defaultCollection: MongoCollection) extends LocationDao w
 
       val resLat = loc(1).asInstanceOf[Double]
       val resLong = loc(0).asInstanceOf[Double]
+      val dist = distFrom(lat, long, resLat, resLong)
 
-      Location(f.getAs[String]("_id"), f.getAs[String]("name").getOrElse(""), resLat, resLong, Some(distFrom(lat, long, resLat, resLong)))
+      Location(f.getAs[String]("_id"), f.getAs[String]("name").getOrElse(""), resLat, resLong, Some(dist), Some(dist < 100))
       //Location(Some("AAA"), "test", 1, 1)
     })
 
