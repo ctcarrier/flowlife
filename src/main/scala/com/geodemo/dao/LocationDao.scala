@@ -38,12 +38,30 @@ class MongoLocationDao(defaultCollection: MongoCollection) extends LocationDao w
     val res = defaultCollection.find(query).map(f => {
       val loc: List[Any] = f.as[BasicDBList]("location").toList
 
-      Location(f.getAs[String]("_id"), f.getAs[String]("name").getOrElse(""), loc(1).asInstanceOf[Double], loc(0).asInstanceOf[Double])
+      val resLat = loc(1).asInstanceOf[Double]
+      val resLong = loc(0).asInstanceOf[Double]
+
+      Location(f.getAs[String]("_id"), f.getAs[String]("name").getOrElse(""), resLat, resLong, Some(distFrom(lat, long, resLat, resLong)))
       //Location(Some("AAA"), "test", 1, 1)
     })
 
     logger.info("DAO RESULT: " + res)
     res.toList
+  }
+
+  def distFrom(lat1: Double, lng1: Double, lat2: Double, lng2: Double): Double = {
+    val earthRadius = 3958.75
+    val dLat = scala.math.toRadians(lat2-lat1)
+    val dLng = scala.math.toRadians(lng2-lng1)
+    val a = scala.math.sin(dLat/2) * scala.math.sin(dLat/2) +
+      scala.math.cos(scala.math.toRadians(lat1)) * scala.math.cos(scala.math.toRadians(lat2)) *
+        scala.math.sin(dLng/2) * scala.math.sin(dLng/2)
+    val c = 2 * scala.math.atan2(scala.math.sqrt(a), scala.math.sqrt(1-a))
+    val dist = earthRadius * c
+
+    val meterConversion = 1609f
+
+    return (dist * meterConversion)
   }
 
 }
