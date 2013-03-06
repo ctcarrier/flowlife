@@ -33,7 +33,7 @@ object GeoDemoInitializer extends App with SprayCanHttpServerApp with Logging {
   val MongoSettings(db) = Some("mongodb://admin:koti3342@ds051007.mongolab.com:51007/heroku_app11453919")
 
   val locationCollection = db(config.getString("mashqwest.location.collection"))
-  val adventurerCollection = db(config.getString("mashqwest.adventurer.collection"))
+  val adventurerCollection = db(config.getString("mashqwest.location.collection"))
 
   val locationDao = new MongoLocationDao(locationCollection)
   val adventurerDao = new MongoAdventurerDao(adventurerCollection)
