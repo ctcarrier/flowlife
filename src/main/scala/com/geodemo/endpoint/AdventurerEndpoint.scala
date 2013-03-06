@@ -25,12 +25,18 @@ trait AdventurerEndpoint extends Actor with HttpService with LiftJsonSupport wit
 
   def receive = regularRoute
 
+  val anyStringMatch = path("^[a-zA-Z0-9]+$".r)
+  val directGet = anyStringMatch & get
+
   def regularRoute: Receive = runRoute {
     path("adventurers"){
       post {
         entity(as[Adventurer]) {
           save
         }
+      } ~
+      directGet {
+        getAdventurer
       }
     }
   }
@@ -40,5 +46,9 @@ trait AdventurerEndpoint extends Actor with HttpService with LiftJsonSupport wit
   def save: Adventurer => Route = { adventurer =>
     dao.save(adventurer)
     complete(adventurer.toString)
+  }
+
+  def getAdventurer: String => Route = { key =>
+    complete(dao.get(key))
   }
 }

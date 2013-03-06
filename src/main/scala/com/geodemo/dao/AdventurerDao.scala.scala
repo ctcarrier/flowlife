@@ -16,6 +16,7 @@ import com.mongodb.BasicDBList
 trait AdventurerDao {
 
   def save(l: Adventurer): Adventurer
+  def get(key: String): Option[Adventurer]
 
 }
 
@@ -30,23 +31,17 @@ class MongoAdventurerDao(defaultCollection: MongoCollection) extends AdventurerD
     toReturn
   }
 
-  /*def get(distance: Int, lat: Double, long: Double): List[Adventurer] = {
-    logger.info("In DAO")
+  def get(key: String): Option[Adventurer] = {
+    logger.info("In Adventurer DAO")
 
-    val query = MongoDBObject("location" -> MongoDBObject("$near" -> (long, lat), "$maxDistance" -> 1))
-    val res = defaultCollection.find(query).map(f => {
-      val loc: List[Any] = f.as[BasicDBList]("location").toList
+    val builder = MongoDBObject.newBuilder
+    builder += ("_id" -> key)
 
-      val resLat = loc(1).asInstanceOf[Double]
-      val resLong = loc(0).asInstanceOf[Double]
-      val dist = distFrom(lat, long, resLat, resLong)
+    val dbo = defaultCollection.findOne(builder.result.asDBObject)
+    val result = dbo.map(f => grater[Adventurer].asObject(f))
 
-      Adventurer(f.getAs[String]("_id"), f.getAs[String]("name").getOrElse(""), resLat, resLong, Some(dist), Some(dist < 100))
-      //Adventurer(Some("AAA"), "test", 1, 1)
-    })
-
-    logger.info("DAO RESULT: " + res)
-    res.toList
-  }*/
+    logger.debug("GET results at DAO: " + result.toString)
+    result
+  }
 
 }
