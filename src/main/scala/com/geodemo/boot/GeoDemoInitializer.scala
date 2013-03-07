@@ -60,7 +60,7 @@ object GeoDemoInitializer extends App with SprayCanHttpServerApp with Logging {
 
   logger.info("Binding to: " + host + " : " + port)
 
-  newHttpServer(locationHandler, adventurerHandler) ! Bind(interface = host, port = port)
+  newHttpServer(locationHandler) ! Bind(interface = host, port = port)
   //newHttpServer(adventurerHandler) ! Bind(interface = host, port = port)
 
 }
