@@ -58,6 +58,8 @@ object GeoDemoInitializer extends App with SprayCanHttpServerApp with Logging {
   // (but several servers and/or clients can share one)
   //override val ioBridge = IOExtension(system).ioBridge
 
+  logger.info("Binding to: " + host + " : " + port)
+
   newHttpServer(locationHandler, adventurerHandler) ! Bind(interface = host, port = port)
   //newHttpServer(adventurerHandler) ! Bind(interface = host, port = port)
 
