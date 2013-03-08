@@ -16,19 +16,14 @@ import routing._
  * @author chris carrier
  */
 
-trait AdventurerEndpoint extends Actor with HttpService with LiftJsonSupport with Logging {
-  implicit val liftJsonFormats = DefaultFormats.lossless + new ObjectIdSerializer
+trait AdventurerEndpoint extends HttpService with LiftJsonSupport with Logging {
 
-  val dao: AdventurerDao
-
-  implicit def actorRefFactory = context
-
-  def receive = regularRoute
+  val adventurerDao: AdventurerDao
 
   val anyStringMatch = path("^[a-zA-Z0-9]+$".r)
   val directGet = anyStringMatch & get
 
-  def regularRoute: Receive = runRoute {
+  def adventurerRoute =
     path("adventurers"){
       post {
         entity(as[Adventurer]) {
@@ -39,16 +34,13 @@ trait AdventurerEndpoint extends Actor with HttpService with LiftJsonSupport wit
         getAdventurer
       }
     }
-  }
 
-  def echoComplete[T]: T => Route = { x => complete(x.toString) }
-
-  def save: Adventurer => Route = { adventurer =>
-    dao.save(adventurer)
+  private def save: Adventurer => Route = { adventurer =>
+    adventurerDao.save(adventurer)
     complete(adventurer.toString)
   }
 
-  def getAdventurer: String => Route = { key =>
-    complete(dao.get(key))
+  private def getAdventurer: String => Route = { key =>
+    complete(adventurerDao.get(key))
   }
 }

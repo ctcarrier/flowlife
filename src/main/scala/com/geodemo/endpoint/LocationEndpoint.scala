@@ -20,21 +20,11 @@ import routing._
  * @author chris carrier
  */
 
-trait LocationEndpoint extends Actor with HttpService with LiftJsonSupport with Logging {
-  implicit val liftJsonFormats = DefaultFormats.lossless + new ObjectIdSerializer
+trait LocationEndpoint extends HttpService with LiftJsonSupport with Logging {
 
-  val dao: LocationDao
+  val locationDao: LocationDao
 
-  implicit def actorRefFactory = context
-
-  def receive = rawRoute orElse regularRoute
-
-  def rawRoute: Receive = {
-    case HttpRequest(GET, "/ping", _, _, _) =>
-      sender ! HttpResponse(entity = "PONG!")
-  }
-
-  def regularRoute: Receive = runRoute {
+  def locationRoute =
     path("locations"){
       post {
         entity(as[Location]) {
@@ -49,17 +39,17 @@ trait LocationEndpoint extends Actor with HttpService with LiftJsonSupport with 
         }
       }
     }
-  }
+
 
   def echoComplete[T]: T => Route = { x => complete(x.toString) }
 
-  def saveLocation: Location => Route = { loc =>
-    dao.saveLocation(loc)
+  private def saveLocation: Location => Route = { loc =>
+    locationDao.saveLocation(loc)
     complete(loc.toString)
   }
 
-  def getNearbyLocations: (Double, Double) => Route = {(lat, long) =>
-    val res = dao.getNearbyLocations(5, lat, long)
+  private def getNearbyLocations: (Double, Double) => Route = {(lat, long) =>
+    val res = locationDao.getNearbyLocations(5, lat, long)
     complete(res)
   }
 }
