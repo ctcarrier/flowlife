@@ -1,4 +1,4 @@
-package com.geodemo.json
+package com.meshqwest.json
 
 import org.bson.types.ObjectId
 import net.liftweb.json.JsonAST.{JString, JValue}

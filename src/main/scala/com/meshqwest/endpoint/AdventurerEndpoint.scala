@@ -1,14 +1,14 @@
-package com.geodemo.endpoint
+package com.meshqwest.endpoint
 
 import spray.http._
 import HttpMethods._
 import net.liftweb.json.DefaultFormats
 import spray._
 import com.weiglewilczek.slf4s.Logging
-import com.geodemo.dao.{AdventurerDao, LocationDao}
-import com.geodemo.json.ObjectIdSerializer
+import com.meshqwest.dao.{AdventurerDao, LocationDao}
+import com.meshqwest.json.ObjectIdSerializer
 import akka.actor.Actor
-import com.geodemo.model.{Adventurer, Location}
+import com.meshqwest.model.{Adventurer, Location}
 import httpx.LiftJsonSupport
 import routing._
 

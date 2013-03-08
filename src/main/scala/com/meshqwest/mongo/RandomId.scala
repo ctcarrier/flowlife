@@ -1,4 +1,4 @@
-package com.geodemo.mongo
+package com.meshqwest.mongo
 
 import java.io.{DataOutputStream, ByteArrayOutputStream}
 import com.weiglewilczek.slf4s.Logging

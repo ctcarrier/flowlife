@@ -1,9 +1,9 @@
-package com.geodemo.endpoint
+package com.meshqwest.endpoint
 
 import akka.actor.Actor
 import spray.routing.HttpService
 import net.liftweb.json.DefaultFormats
-import com.geodemo.json.ObjectIdSerializer
+import com.meshqwest.json.ObjectIdSerializer
 
 /**
  * Created with IntelliJ IDEA.

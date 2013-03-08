@@ -1,4 +1,4 @@
-package com.geodemo.service
+package com.meshqwest.service
 
 /**
  * @author chris_carrier

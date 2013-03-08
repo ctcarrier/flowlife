@@ -1,4 +1,4 @@
-package com.geodemo.mongo
+package com.meshqwest.mongo
 
 import com.mongodb.casbah.Imports._
 
@@ -11,7 +11,7 @@ object MongoSettings {
         db.authenticate(u, p)
         Some(db)
       case None =>
-        Some(MongoConnection("localhost", 27017)("geodemo"))
+        Some(MongoConnection("localhost", 27017)("meshqwest"))
     }
   }
 }

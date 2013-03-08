@@ -1,4 +1,4 @@
-package com.geodemo.model
+package com.meshqwest.model
 
 import com.mongodb.casbah.commons.MongoDBObject
 

@@ -1,12 +1,12 @@
-package com.geodemo.boot
+package com.meshqwest.boot
 
 import util.Properties
 import akka.actor.{ActorSystem, Props}
 import com.weiglewilczek.slf4s.Logging
 import com.typesafe.config.ConfigFactory
-import com.geodemo.mongo.MongoSettings
-import com.geodemo.endpoint.{MasterEndpoint, AdventurerEndpoint, LocationEndpoint}
-import com.geodemo.dao.{MongoAdventurerDao, AdventurerDao, MongoLocationDao, LocationDao}
+import com.meshqwest.mongo.MongoSettings
+import com.meshqwest.endpoint.{MasterEndpoint, AdventurerEndpoint, LocationEndpoint}
+import com.meshqwest.dao.{MongoAdventurerDao, AdventurerDao, MongoLocationDao, LocationDao}
 import spray.can.server.{HttpServer, SprayCanHttpServerApp}
 import spray.io.IOExtension
 

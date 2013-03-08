@@ -1,10 +1,10 @@
-package com.geodemo.dao
+package com.meshqwest.dao
 
 import com.mongodb.casbah.Imports._
 import com.novus.salat._
 import com.novus.salat.global._
-import com.geodemo.model.Adventurer
-import com.geodemo.mongo.RandomId
+import com.meshqwest.model.Adventurer
+import com.meshqwest.mongo.RandomId
 import com.weiglewilczek.slf4s.Logging
 import com.mongodb.BasicDBList
 

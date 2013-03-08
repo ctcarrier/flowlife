@@ -1,4 +1,4 @@
-package com.geodemo.dao
+package com.meshqwest.dao
 
 import com.mongodb.casbah.Imports._
 import com.novus.salat._
@@ -6,7 +6,7 @@ import com.novus.salat.global._
 import scala.reflect.Manifest
 import com.weiglewilczek.slf4s.Logging
 import akka.actor.ActorRef
-import com.geodemo.mongo.RandomId
+import com.meshqwest.mongo.RandomId
 import akka.dispatch.ExecutionContext
 
 trait GeodemoDao[T <: CaseClass, W <: CaseClass] extends Logging {

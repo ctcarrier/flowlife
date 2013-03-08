@@ -1,26 +1,17 @@
-package com.geodemo.endpoint
+package com.meshqwest.endpoint
 
-import spray.http._
-import MediaTypes._
-import HttpMethods._
-import net.liftweb.json.DefaultFormats
 import spray._
 import com.weiglewilczek.slf4s.Logging
-import com.geodemo.dao.LocationDao
-import com.geodemo.service.LocationService
-import com.geodemo.json.{ObjectIdSerializer}
-import akka.actor.Actor
-import com.geodemo.model.Location
+import com.meshqwest.dao.LocationDao
+import com.meshqwest.model.Location
 import httpx.LiftJsonSupport
-import spray.httpx.unmarshalling._
-import spray.httpx.marshalling._
 import routing._
 
 /**
  * @author chris carrier
  */
 
-trait LocationEndpoint extends HttpService with LiftJsonSupport with Logging {
+trait MeshEndpoint extends HttpService with LiftJsonSupport with Logging {
 
   val locationDao: LocationDao
 

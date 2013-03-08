@@ -1,4 +1,4 @@
-package com.geodemo.model
+package com.meshqwest.model
 
 /**
  * Created with IntelliJ IDEA.
