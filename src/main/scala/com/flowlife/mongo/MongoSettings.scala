@@ -1,4 +1,4 @@
-package com.meshqwest.mongo
+package com.flowlife.mongo
 
 import com.mongodb.casbah.Imports._
 
@@ -11,7 +11,7 @@ object MongoSettings {
         db.authenticate(u, p)
         Some(db)
       case None =>
-        Some(MongoConnection("localhost", 27017)("meshqwest"))
+        Some(MongoConnection("localhost", 27017)("flowlife"))
     }
   }
 }

@@ -1,4 +1,4 @@
-package com.meshqwest.mongo
+package com.flowlife.mongo
 
 import java.io.{DataOutputStream, ByteArrayOutputStream}
 import com.weiglewilczek.slf4s.Logging

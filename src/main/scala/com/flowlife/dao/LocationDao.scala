@@ -1,10 +1,10 @@
-package com.meshqwest.dao
+package com.flowlife.dao
 
 import com.mongodb.casbah.Imports._
 import com.novus.salat._
 import com.novus.salat.global._
-import com.meshqwest.model.Location
-import com.meshqwest.mongo.RandomId
+import com.flowlife.model.Location
+import com.flowlife.mongo.RandomId
 import com.weiglewilczek.slf4s.Logging
 import com.mongodb.BasicDBList
 
@@ -24,10 +24,10 @@ class MongoLocationDao(defaultCollection: MongoCollection) extends LocationDao w
 
   def saveLocation(l: Location): Location = {
     val randomId = RandomId.getNextValue
-    val toSave = MongoDBObject("_id" -> randomId, "name" -> l.name, "location" -> List(l.long, l.lat))
+    val toReturn = l.copy(_id = randomId)
+    val toSave = grater[Location].asDBObject(toReturn)
     defaultCollection.insert(toSave)
 
-    val toReturn = l.copy(_id = randomId)
     toReturn
   }
 
@@ -42,7 +42,7 @@ class MongoLocationDao(defaultCollection: MongoCollection) extends LocationDao w
       val resLong = loc(0).asInstanceOf[Double]
       val dist = distFrom(lat, long, resLat, resLong)
 
-      Location(f.getAs[String]("_id"), f.getAs[String]("name").getOrElse(""), resLat, resLong, Some(dist), Some(dist < 100))
+      Location(f.getAs[String]("_id"), f.getAs[String]("name").getOrElse(""), resLat, resLong, "CHANGE ME", Some(dist), Some(dist < 100))
       //Location(Some("AAA"), "test", 1, 1)
     })
 

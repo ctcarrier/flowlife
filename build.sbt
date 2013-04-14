@@ -2,7 +2,7 @@ import com.typesafe.startscript.StartScriptPlugin
 
 organization := "simplyoverkill"
 
-name := "mashqwest"
+name := "flowlife"
 
 version := "0.1.0-SNAPSHOT"
 

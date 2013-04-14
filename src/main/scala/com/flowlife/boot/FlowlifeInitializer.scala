@@ -1,20 +1,21 @@
-package com.meshqwest.boot
+package com.flowlife.boot
 
 import util.Properties
 import akka.actor.{ActorSystem, Props}
 import com.weiglewilczek.slf4s.Logging
 import com.typesafe.config.ConfigFactory
-import com.meshqwest.mongo.MongoSettings
-import com.meshqwest.endpoint.{MasterEndpoint, AdventurerEndpoint, LocationEndpoint}
-import com.meshqwest.dao.{MongoAdventurerDao, AdventurerDao, MongoLocationDao, LocationDao}
+import com.flowlife.mongo.MongoSettings
+import com.flowlife.endpoint.{MasterEndpoint, TrickEndpoint, LocationEndpoint}
+import com.flowlife.dao._
 import spray.can.server.{HttpServer, SprayCanHttpServerApp}
 import spray.io.IOExtension
+import scala.Some
 
 /**
  * @author chris_carrier
  */
 
-object GeoDemoInitializer extends App with SprayCanHttpServerApp with Logging {
+object FlowlifeInitializer extends App with SprayCanHttpServerApp with Logging {
 
   logger.info("Running Initializer")
 
@@ -30,22 +31,19 @@ object GeoDemoInitializer extends App with SprayCanHttpServerApp with Logging {
 
 //  val urlList = mongoUrl.split(",").toList.map(new ServerAddress(_))
 
-  val MongoSettings(db) = Some("mongodb://admin:koti3342@ds051007.mongolab.com:51007/heroku_app11453919")
+  val MongoSettings(db) = Some(config.getString("flowlife.db.url"))
 
-  val locationCollection = db(config.getString("mashqwest.location.collection"))
-  val adventurerCollection = db(config.getString("mashqwest.adventurer.collection"))
+  val trickCollection = db(config.getString("flowlife.trick.collection"))
 
-  val locationDaoM = new MongoLocationDao(locationCollection)
-  val adventurerDaoM = new MongoAdventurerDao(adventurerCollection)
+  val trickDaoM = new MongoTrickDao(trickCollection)
   // ///////////// INDEXES for collections go here (include all lookup fields)
   //  configsCollection.ensureIndex(MongoDBObject("customerId" -> 1), "idx_customerId")
 
   val masterHandler = system.actorOf(
     Props(new MasterEndpoint {
-      val locationDao = locationDaoM
-      val adventurerDao = adventurerDaoM
+      val adventurerDao = trickDaoM
     }),
-    name = "mashqwest-service"
+    name = "flowlife-service"
   )
 
   // every spray-can HttpServer (and HttpClient) needs an IoWorker for low-level network IO

@@ -1,4 +1,4 @@
-package com.meshqwest.endpoint
+package com.flowlife.endpoint
 
 import spray.http._
 import MediaTypes._
@@ -6,11 +6,11 @@ import HttpMethods._
 import net.liftweb.json.DefaultFormats
 import spray._
 import com.weiglewilczek.slf4s.Logging
-import com.meshqwest.dao.LocationDao
-import com.meshqwest.service.LocationService
-import com.meshqwest.json.{ObjectIdSerializer}
+import com.flowlife.dao.LocationDao
+import com.flowlife.service.LocationService
+import com.flowlife.json.{ObjectIdSerializer}
 import akka.actor.Actor
-import com.meshqwest.model.Location
+import com.flowlife.model.Location
 import httpx.LiftJsonSupport
 import spray.httpx.unmarshalling._
 import spray.httpx.marshalling._
@@ -25,17 +25,19 @@ trait LocationEndpoint extends HttpService with LiftJsonSupport with Logging {
   val locationDao: LocationDao
 
   def locationRoute =
-    path("locations"){
-      post {
-        entity(as[Location]) {
-          saveLocation
+    respondWithMediaType(`application/json`) {
+      path("locations"){
+        post {
+          entity(as[Location]) {
+            saveLocation
+          }
         }
-      }
-    } ~
-    path("nearbyLocations"){
-      get {
-        parameters("lat".as[Double], "long".as[Double]) {
-          getNearbyLocations
+      } ~
+      path("nearbyLocations"){
+        get {
+          parameters("lat".as[Double], "long".as[Double]) {
+            getNearbyLocations
+          }
         }
       }
     }
@@ -44,8 +46,8 @@ trait LocationEndpoint extends HttpService with LiftJsonSupport with Logging {
   def echoComplete[T]: T => Route = { x => complete(x.toString) }
 
   private def saveLocation: Location => Route = { loc =>
-    locationDao.saveLocation(loc)
-    complete(loc.toString)
+    val res = locationDao.saveLocation(loc)
+    complete(res)
   }
 
   private def getNearbyLocations: (Double, Double) => Route = {(lat, long) =>

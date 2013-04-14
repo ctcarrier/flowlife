@@ -1,4 +1,4 @@
-package com.meshqwest.json
+package com.flowlife.json
 
 import org.bson.types.ObjectId
 import net.liftweb.json.JsonAST.{JString, JValue}

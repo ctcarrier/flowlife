@@ -1,4 +1,4 @@
-package com.meshqwest.service
+package com.flowlife.service
 
 /**
  * @author chris_carrier
