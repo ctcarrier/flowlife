@@ -5,7 +5,7 @@ import HttpMethods._
 import net.liftweb.json.DefaultFormats
 import spray._
 import com.weiglewilczek.slf4s.Logging
-import com.flowlife.dao.{AdventurerDao, LocationDao}
+import com.flowlife.dao.{TrickDao, LocationDao}
 import com.flowlife.json.ObjectIdSerializer
 import akka.actor.Actor
 import com.flowlife.model.{Trick, Location}
@@ -20,7 +20,7 @@ trait TrickEndpoint extends HttpService with MeshDirectives with LiftJsonSupport
 
   val trickDao: TrickDao
 
-  def adventurerRoute =
+  def trickRoute =
     path("tricks"){
       post {
         entity(as[Trick]) {

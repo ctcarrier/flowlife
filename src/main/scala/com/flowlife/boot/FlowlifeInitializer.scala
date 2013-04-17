@@ -41,7 +41,7 @@ object FlowlifeInitializer extends App with SprayCanHttpServerApp with Logging {
 
   val masterHandler = system.actorOf(
     Props(new MasterEndpoint {
-      val adventurerDao = trickDaoM
+      val trickDao = trickDaoM
     }),
     name = "flowlife-service"
   )

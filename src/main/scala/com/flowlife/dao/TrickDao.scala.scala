@@ -45,16 +45,6 @@ class MongoTrickDao(defaultCollection: MongoCollection) extends TrickDao with Lo
     result
   }
 
-  def getAll: Option[List[Trick]] = {
-    logger.info("In Trick DAO")
-
-    val dbo = defaultCollection.find
-    val result = dbo.map(f => grater[Trick].asObject(f))
-
-    logger.debug("GET results at DAO: " + result.toString)
-    result
-  }
-
   def getAll = {
 
     val listRes = defaultCollection.find().map(f => {
