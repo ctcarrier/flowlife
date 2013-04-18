@@ -31,7 +31,7 @@ object FlowlifeInitializer extends App with SprayCanHttpServerApp with Logging {
 
 //  val urlList = mongoUrl.split(",").toList.map(new ServerAddress(_))
 
-  val MongoSettings(db) = Some(config.getString("flowlife.db.url"))
+  val MongoSettings(db) = Some(Properties.envOrElse("MONGOHQ_URL", "error"))
 
   val trickCollection = db(config.getString("flowlife.trick.collection"))
 
