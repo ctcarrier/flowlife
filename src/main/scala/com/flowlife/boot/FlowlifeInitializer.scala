@@ -5,7 +5,7 @@ import akka.actor.{ActorSystem, Props}
 import com.weiglewilczek.slf4s.Logging
 import com.typesafe.config.ConfigFactory
 import com.flowlife.mongo.MongoSettings
-import com.flowlife.endpoint.{MasterEndpoint, TrickEndpoint, LocationEndpoint}
+import com.flowlife.endpoint.{MasterEndpoint, TrickEndpoint}
 import com.flowlife.dao._
 import spray.can.server.{HttpServer, SprayCanHttpServerApp}
 import spray.io.IOExtension
@@ -26,12 +26,12 @@ object FlowlifeInitializer extends App with SprayCanHttpServerApp with Logging {
   val host = "0.0.0.0"
   val port = Properties.envOrElse("PORT", "8080").toInt
 
-  val mongoUrl = config.getString("mongodb.url")
+  val mongoUrl = config.getString("flowlife.db.url")
   val mongoDbName = config.getString("mongodb.database")
 
 //  val urlList = mongoUrl.split(",").toList.map(new ServerAddress(_))
 
-  val MongoSettings(db) = Some(Properties.envOrElse("MONGOHQ_URL", "error"))
+  val MongoSettings(db) = Some(Properties.envOrElse("MONGOHQ_URL", mongoUrl))
 
   val trickCollection = db(config.getString("flowlife.trick.collection"))
 
