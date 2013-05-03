@@ -23,11 +23,11 @@ import routing._
 trait WebappEndpoint extends HttpService with LiftJsonSupport with Logging {
 
   def webappRoute =
-      path("app"){
-          getFromResourceDirectory("webapp")
+      pathPrefix("app"){
+          get {
+            getFromResourceDirectory("webapp")
+          }
+
       }
-
-
-  def echoComplete[T]: T => Route = { x => complete(x.toString) }
 
 }
