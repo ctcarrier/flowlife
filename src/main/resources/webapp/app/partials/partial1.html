@@ -1,0 +1,11 @@
+<p>This is the partial for view 1.</p>
+
+<form novalidate class="simple-form">
+Name: <input type="text" ng-model="loc.name" /><br />
+Lat: <input type="number" ng-model="loc.lat" /><br />
+Long: <input type="number" ng-model="loc.long" />male
+<button ng-click="reset()" ng-disabled="isUnchanged(user)">RESET</button>
+<button ng-click="update(user)"
+        ng-disabled="form.$invalid || isUnchanged(user)">SAVE</button>
+</form>
+<pre>form = {{loc | json}}</pre>

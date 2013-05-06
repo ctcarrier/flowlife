@@ -1,0 +1,80 @@
+html {
+	height: 100%;
+}
+body {
+	margin: 0;
+	padding: 0;
+	height: 100%;
+	background-color: #000000;
+}
+
+.content{
+	color: #FFFF00;
+}
+
+#galleria{
+	height:100%;
+}
+
+#nav {
+	width: 100%;
+	float: left;
+	margin: 0 0 3em 0;
+	padding: 0;
+	list-style: none;
+	background-color: #000000;
+	border-bottom: 1px solid #ccc; 
+	border-top: 1px solid #ccc; }
+#nav li {
+	float: left; }
+#nav li a {
+	display: block;
+	padding: 8px 15px;
+	text-decoration: none;
+	font-weight: bold;
+	color: #069;
+	border-right: 1px solid #ccc; }
+#nav li a:hover {
+	color: #c00;
+	background-color: #fff; }
+
+#navbar-container{
+	background:#000000;
+}
+#int-site-container{
+height:166px;
+}
+#logo, #navbar, #int-site{
+width:800px;
+margin:0 auto;
+}
+/*------------------*/
+/* LOGO */
+#logo{
+	height:4em;
+}
+
+#first-logo {
+	color: #990033;
+	text-shadow: 0px 2px 3px yellow;
+	font-size: 4em;
+}
+#second-logo {
+	color: #FFCC00;
+	text-shadow: 0px 2px 3px red;
+	font-size: 4em;
+}
+
+/*------------------*/
+/* Nav Bar */
+#navbar{
+height:26px;
+line-height:26px;
+float: left;
+}
+#navbar a:link, #navbar a:visited, #navbar a:hover{
+color:#FFFFFF;
+font-weight:bold;
+margin-right:20px;
+text-decoration:none;
+}

@@ -34,14 +34,17 @@ object FlowlifeInitializer extends App with SprayCanHttpServerApp with Logging {
   val MongoSettings(db) = Some(Properties.envOrElse("MONGOHQ_URL", mongoUrl))
 
   val trickCollection = db(config.getString("flowlife.trick.collection"))
+  val trickCategoryCollection = db(config.getString("flowlife.trickcategory.collection"))
 
   val trickDaoM = new MongoTrickDao(trickCollection)
+  val trickCategoryDaoM = new MongoTrickCategoryDao(trickCategoryCollection)
   // ///////////// INDEXES for collections go here (include all lookup fields)
   //  configsCollection.ensureIndex(MongoDBObject("customerId" -> 1), "idx_customerId")
 
   val masterHandler = system.actorOf(
     Props(new MasterEndpoint {
       val trickDao = trickDaoM
+      val trickCategoryDao = trickCategoryDaoM
     }),
     name = "flowlife-service"
   )

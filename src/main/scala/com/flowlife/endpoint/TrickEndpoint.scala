@@ -21,7 +21,7 @@ trait TrickEndpoint extends HttpService with MeshDirectives with LiftJsonSupport
   val trickDao: TrickDao
 
   def trickRoute =
-    path("tricks"){
+    path("api" / "tricks"){
       post {
         entity(as[Trick]) {
           save

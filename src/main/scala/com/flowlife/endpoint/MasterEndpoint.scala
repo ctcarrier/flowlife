@@ -12,13 +12,13 @@ import com.flowlife.json.ObjectIdSerializer
  * Time: 9:16 AM
  * To change this template use File | Settings | File Templates.
  */
-trait MasterEndpoint extends Actor with TrickEndpoint with WebappEndpoint with HttpService {
+trait MasterEndpoint extends Actor with TrickEndpoint with WebappEndpoint with TrickCategoryEndpoint with HttpService {
 
   implicit def actorRefFactory = context
   implicit def executor = context.dispatcher
 
   implicit val liftJsonFormats = DefaultFormats.lossless + new ObjectIdSerializer
 
-  def receive = runRoute(trickRoute ~ webappRoute)
+  def receive = runRoute(trickRoute ~ webappRoute ~ trickCategoryRoute)
 
 }

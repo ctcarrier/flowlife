@@ -1,0 +1,9 @@
+<p>This is the partial for the mesh view.</p>
+
+<form novalidate class="simple-form">
+Name: <input type="text" ng-model="mesh.name" /><br />
+<button ng-click="reset()" ng-disabled="isUnchanged(mesh)">RESET</button>
+<button ng-click="update(mesh)"
+        ng-disabled="form.$invalid || isUnchanged(mesh)">SAVE</button>
+</form>
+<pre>form = {{mesh | json}}</pre>
