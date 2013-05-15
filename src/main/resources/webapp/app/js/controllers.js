@@ -11,7 +11,7 @@ function MyCtrl2() {
 }
 MyCtrl2.$inject = [];
 
-function TrickController($scope, $resource, Trick) {
+function TrickCategoryController($scope, $resource, Trick) {
 	var Trick = $resource('/api/tricks/:_id');
 	var TrickCategory = $resource('/api/trickCategories/:_id');
 	$scope.allTricks = Trick.query({});
@@ -32,7 +32,14 @@ function TrickController($scope, $resource, Trick) {
  
   $scope.reset();
 }
-TrickController.$inject = ['$scope', '$resource'];
+TrickCategoryController.$inject = ['$scope', '$resource'];
+
+function TrickController($scope, $resource, $routeParams) {
+	var Trick = $resource('/api/tricks/:_id');
+	$scope.allTricks = Trick.query({category: $routeParams.category});
+}
+
+TrickController.$inject = ['$scope', '$resource', '$routeParams'];
 
 function MeshController($scope, $resource) {
         var Mesh = $resource('/api/meshes/:_id');

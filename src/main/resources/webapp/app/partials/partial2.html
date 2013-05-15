@@ -1,7 +1,15 @@
 <p>This is the partial for view 2.</p>
 <p>
-<li ng-repeat="trickCategory in allTrickCategories">
-    {{trickCategory.name}}
-    <img src="{{trickCategory.defaultImage}}" />
-</li>
+<div id="trickCategories span8">
+    <ul>
+        <div class="span3">
+            <li ng-repeat="trickCategory in allTrickCategories">
+                <a href="#{{trickCategory.href}}">
+                    <div class="trickCategoryHeader">{{trickCategory.name}}</div>
+                    <div class="trickCategoryImage"><img src="{{trickCategory.defaultImage}}" /></div>
+                </a>
+            </li>
+        </div>
+    </ul>
+</div>
 </p>

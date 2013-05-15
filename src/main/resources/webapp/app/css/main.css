@@ -78,3 +78,21 @@ font-weight:bold;
 margin-right:20px;
 text-decoration:none;
 }
+
+#trickCategories ul{
+    list-style-type: none;
+    white-space: nowrap;
+}
+
+.trickCategoryHeader {
+    background-color:yellow;
+    text-align: center;
+    padding-top: 5px;
+    padding-bottom: 10px;
+    border-top: 1px solid black;
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+}
+.trickCategoryImage {
+
+}

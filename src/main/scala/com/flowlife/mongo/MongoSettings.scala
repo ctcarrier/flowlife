@@ -10,7 +10,7 @@ object MongoSettings {
         val db = MongoConnection(host, port.toInt)(dbName)
         db.authenticate(u, p)
         Some(db)
-      case None =>
+      case _ =>
         Some(MongoConnection("localhost", 27017)("flowlife"))
     }
   }

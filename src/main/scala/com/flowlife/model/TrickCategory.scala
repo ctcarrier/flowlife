@@ -7,4 +7,4 @@ package com.flowlife.model
  * Time: 10:46 AM
  * To change this template use File | Settings | File Templates.
  */
-case class TrickCategory (_id: Option[String], name: String, defaultImage: String)
+case class TrickCategory (_id: Option[String], name: String, defaultImage: String, href: String)

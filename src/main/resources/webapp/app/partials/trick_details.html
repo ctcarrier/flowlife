@@ -1,0 +1,14 @@
+<div id="trickCategories span8">
+    <ul>
+        <li ng-repeat="trick in allTricks">
+            <div class="row">
+                <div class="span8">{{trick.defaultImage}}</div>
+                <div class="span4">{{trick.name}}</div>
+                <div class="span4">{{trick.category}}</div>
+            </div>
+            <div class="span8">{{trick.description}}</div>
+            <iframe width="640" height="360" src="{{trick.videoLink}}" frameborder="0" allowfullscreen></iframe>
+        </li>
+    </ul>
+</div>
+</p>

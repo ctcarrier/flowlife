@@ -17,7 +17,7 @@ trait TrickDao {
 
   def save(l: Trick): Trick
   def get(key: String): Option[Trick]
-  def getAll: Option[List[Trick]]
+  def getAll(category: Option[String]): Option[List[Trick]]
 
 }
 
@@ -38,16 +38,31 @@ class MongoTrickDao(defaultCollection: MongoCollection) extends TrickDao with Lo
     val builder = MongoDBObject.newBuilder
     builder += ("_id" -> key)
 
-    val dbo = defaultCollection.findOne(builder.result.asDBObject)
+    getFromObj(builder.result.asDBObject)
+  }
+
+  def getByCategory(category: String): Option[Trick] = {
+    logger.info("In Trick DAO")
+
+    val builder = MongoDBObject.newBuilder
+    builder += ("category" -> category)
+
+    getFromObj(builder.result.asDBObject)
+  }
+
+  private def getFromObj(obj: MongoDBObject): Option[Trick] = {
+    val dbo = defaultCollection.findOne(obj)
     val result = dbo.map(f => grater[Trick].asObject(f))
 
     logger.debug("GET results at DAO: " + result.toString)
     result
   }
 
-  def getAll = {
+  def getAll(category: Option[String]) = {
+    val builder = MongoDBObject.newBuilder
+    category.foreach(c => builder += ("category" -> c))
 
-    val listRes = defaultCollection.find().map(f => {
+    val listRes = defaultCollection.find(builder.result.asDBObject).map(f => {
       grater[Trick].asObject(f)
     }).toList
 

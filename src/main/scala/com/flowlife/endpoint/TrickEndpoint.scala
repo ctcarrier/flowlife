@@ -20,6 +20,8 @@ trait TrickEndpoint extends HttpService with MeshDirectives with LiftJsonSupport
 
   val trickDao: TrickDao
 
+  val indirectGetTrick = path("") & get & parameter('category ?)
+
   def trickRoute =
     path("api" / "tricks"){
       post {
@@ -30,7 +32,7 @@ trait TrickEndpoint extends HttpService with MeshDirectives with LiftJsonSupport
       directGet {
         getTrick
       } ~
-      indirectGet {
+      indirectGetTrick {
         getAllTricks
       }
     }
@@ -44,7 +46,7 @@ trait TrickEndpoint extends HttpService with MeshDirectives with LiftJsonSupport
     complete(trickDao.get(key))
   }
 
-  private def getAllTricks = {
-    complete(trickDao.getAll)
+  private def getAllTricks: Option[String] => Route = { category =>
+    complete(trickDao.getAll(category))
   }
 }
