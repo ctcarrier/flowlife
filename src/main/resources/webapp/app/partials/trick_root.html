@@ -1,7 +1,9 @@
 <div id="trickCategories span8">
     <div class="span2" ng-repeat="trick in allTricks">
-        <img src="{{trick.defaultImage}}" />
-        {{trick.name}}
+        <a href="#/tricks/{{trick._id}}">
+            <img src="{{trick.defaultImage}}" />
+            {{trick.name}}
+        </a>
     </div>
 </div>
 </p>

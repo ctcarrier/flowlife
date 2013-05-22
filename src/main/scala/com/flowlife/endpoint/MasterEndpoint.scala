@@ -1,9 +1,15 @@
 package com.flowlife.endpoint
 
 import akka.actor.Actor
-import spray.routing.HttpService
+import spray.routing._
 import net.liftweb.json.DefaultFormats
 import com.flowlife.json.ObjectIdSerializer
+import spray.routing.directives.RouteDirectives._
+import spray.http.StatusCodes._
+import spray.http.HttpHeaders.`WWW-Authenticate`
+import spray.http.HttpChallenge
+import spray.routing.AuthenticationRequiredRejection
+import spray.http.HttpChallenge
 
 /**
  * Created with IntelliJ IDEA.
@@ -19,6 +25,8 @@ trait MasterEndpoint extends Actor with TrickEndpoint with WebappEndpoint with T
 
   implicit val liftJsonFormats = DefaultFormats.lossless + new ObjectIdSerializer
 
-  def receive = runRoute(trickRoute ~ webappRoute ~ trickCategoryRoute)
+  def masterRoute: Route = trickRoute ~ webappRoute ~ trickCategoryRoute
+
+  def receive = runRoute(masterRoute)
 
 }

@@ -2,18 +2,9 @@
 
 /* Controllers */
 
-
-function MyCtrl1() {}
-MyCtrl1.$inject = [];
-
-
-function MyCtrl2() {
-}
-MyCtrl2.$inject = [];
-
-function TrickCategoryController($scope, $resource, Trick) {
-	var Trick = $resource('/api/tricks/:_id');
-	var TrickCategory = $resource('/api/trickCategories/:_id');
+function TrickCategoryController($scope, $resource) {
+    var Trick = $resource('/api/tricks/:_id');
+    var TrickCategory = $resource('/api/trickCategories/:_id');
 	$scope.allTricks = Trick.query({});
 	$scope.allTrickCategories = TrickCategory.query({});
 	$scope.trick = new Trick({});
@@ -34,30 +25,21 @@ function TrickCategoryController($scope, $resource, Trick) {
 }
 TrickCategoryController.$inject = ['$scope', '$resource'];
 
-function TrickController($scope, $resource, $routeParams) {
-	var Trick = $resource('/api/tricks/:_id');
+function TrickController($scope, $resource, $routeParams, Trick) {
 	$scope.allTricks = Trick.query({category: $routeParams.category});
 }
 
-TrickController.$inject = ['$scope', '$resource', '$routeParams'];
+TrickController.$inject = ['$scope', '$resource', '$routeParams', Trick];
 
-function MeshController($scope, $resource) {
-        var Mesh = $resource('/api/meshes/:_id');
-        $scope.mesh = new Mesh({});
-	//$http.defaults.headers.common['Authorization'] = 'Basic ' + 'Y2hyaXNAY2hyaXMuY29tOjEyMzQ=';
-
-  $scope.update = function(user) {
-    $scope.mesh.$save();
-  };
-
-  $scope.reset = function() {
-    //$scope.loc = {};
-  };
-
-  $scope.isUnchanged = function(mseh) {
-    return angular.equals($scope.mesh, {});
-  };
-
-  $scope.reset();
+function TrickDetailsController($scope, $resource, $routeParams, Trick) {
+	$scope.trick = Trick.get({_id: $routeParams.trickId});
 }
-MeshController.$inject = ['$scope', '$resource'];
+
+TrickDetailsController.$inject = ['$scope', '$resource', '$routeParams', Trick];
+
+function TrickAdminController($scope, $resource, $routeParams, Trick) {
+    $http.defaults.headers.common['Authorization'] = 'Basic ' + 'Y2hyaXNAY2hyaXMuY29tOjEyMzQ=';
+	$scope.trick = Trick.get({_id: $routeParams.trickId});
+}
+
+TrickAdminController.$inject = ['$scope', '$resource', '$routeParams', Trick];

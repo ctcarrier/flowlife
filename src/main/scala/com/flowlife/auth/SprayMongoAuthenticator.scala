@@ -30,18 +30,19 @@ import com.typesafe.config.ConfigFactory
 object FromMongoUserPassAuthenticator extends Logging {
   val config = ConfigFactory.load()
 
-  def apply()(implicit executor: ExecutionContext): UserPassAuthenticator[Trick] = {
-    new UserPassAuthenticator[Trick] {
+  def apply()(implicit executor: ExecutionContext): UserPassAuthenticator[UserPass] = {
+    new UserPassAuthenticator[UserPass] {
       def apply(userPass: Option[UserPass]) = {
         logger.info("Mongo auth")
         Future {
 
           userPass.flatMap(up => {
             logger.info("Autenticating: " + up.user + " " + up.pass)
-            val MongoSettings(db) = Some(config.getString("mashqwest.db.url"))
-            val userColl = db(config.getString("mashqwest.adventurer.collection"))
+            val mongoUrl = config.getString("flowlife.db.url")
+            val MongoSettings(db) = Some(Properties.envOrElse("MONGOHQ_URL", mongoUrl))
+            val userColl = db(config.getString("flowlife.user.collection"))
             val userResult = userColl.findOne(MongoDBObject("email" -> up.user) ++ ("password" -> up.pass))
-            userResult.map(grater[Trick].asObject(_))
+            userResult.map(grater[UserPass].asObject(_))
           })
 
         }
