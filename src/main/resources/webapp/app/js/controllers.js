@@ -8,38 +8,44 @@ function TrickCategoryController($scope, $resource) {
 	$scope.allTricks = Trick.query({});
 	$scope.allTrickCategories = TrickCategory.query({});
 	$scope.trick = new Trick({});
- 
-  $scope.update = function(user) {
-    $scope.trick.$save();
-  };
- 
-  $scope.reset = function() {
-    //$scope.loc = {};
-  };
- 
-  $scope.isUnchanged = function(user) {
-    return angular.equals(user, {});
-  };
- 
-  $scope.reset();
 }
 TrickCategoryController.$inject = ['$scope', '$resource'];
 
-function TrickController($scope, $resource, $routeParams, Trick) {
+function TrickController($scope, $resource, $routeParams) {
+    var Trick = $resource('/api/tricks/:_id');
 	$scope.allTricks = Trick.query({category: $routeParams.category});
 }
 
-TrickController.$inject = ['$scope', '$resource', '$routeParams', Trick];
+TrickController.$inject = ['$scope', '$resource', '$routeParams'];
 
-function TrickDetailsController($scope, $resource, $routeParams, Trick) {
+function TrickDetailsController($scope, $resource, $routeParams) {
+    var Trick = $resource('/api/tricks/:_id');
 	$scope.trick = Trick.get({_id: $routeParams.trickId});
 }
 
-TrickDetailsController.$inject = ['$scope', '$resource', '$routeParams', Trick];
+TrickDetailsController.$inject = ['$scope', '$resource', '$routeParams'];
 
-function TrickAdminController($scope, $resource, $routeParams, Trick) {
-    $http.defaults.headers.common['Authorization'] = 'Basic ' + 'Y2hyaXNAY2hyaXMuY29tOjEyMzQ=';
-	$scope.trick = Trick.get({_id: $routeParams.trickId});
+function AdminRootController($scope, $resource, $routeParams, $cookieStore, $http, User) {
+    $http.defaults.headers.common['Authorization'] = 'Basic ' + $cookieStore.get('user');
+    var user = User.query();
+    console.log("Got " + user);
+	$scope.user = user;
 }
 
-TrickAdminController.$inject = ['$scope', '$resource', '$routeParams', Trick];
+AdminRootController.$inject = ['$scope', '$resource', '$routeParams', '$cookieStore', '$http', User];
+
+function AdminLoginController($scope, $resource, $routeParams, $cookieStore, $location, User) {
+
+	$scope.user = User.query();
+
+	$scope.login = function(user) {
+        var authToken = user.email + ":" + user.password;
+        var encodedToken = Base64.encode(authToken);
+
+        $cookieStore.put('user', encodedToken);
+
+        $location.path('/home');
+	}
+}
+
+AdminLoginController.$inject = ['$scope', '$resource', '$routeParams', '$cookieStore', '$location', User];

@@ -19,7 +19,7 @@ import scala.util.Properties
 import akka.dispatch.{ExecutionContext, Future}
 import com.flowlife.mongo.MongoSettings
 import spray.routing.authentication._
-import com.flowlife.model.Trick
+import com.flowlife.model.{User, Trick}
 import com.typesafe.config.ConfigFactory
 
 /**
@@ -30,8 +30,8 @@ import com.typesafe.config.ConfigFactory
 object FromMongoUserPassAuthenticator extends Logging {
   val config = ConfigFactory.load()
 
-  def apply()(implicit executor: ExecutionContext): UserPassAuthenticator[UserPass] = {
-    new UserPassAuthenticator[UserPass] {
+  def apply()(implicit executor: ExecutionContext): UserPassAuthenticator[User] = {
+    new UserPassAuthenticator[User] {
       def apply(userPass: Option[UserPass]) = {
         logger.info("Mongo auth")
         Future {
@@ -42,7 +42,7 @@ object FromMongoUserPassAuthenticator extends Logging {
             val MongoSettings(db) = Some(Properties.envOrElse("MONGOHQ_URL", mongoUrl))
             val userColl = db(config.getString("flowlife.user.collection"))
             val userResult = userColl.findOne(MongoDBObject("email" -> up.user) ++ ("password" -> up.pass))
-            userResult.map(grater[UserPass].asObject(_))
+            userResult.map(grater[User].asObject(_))
           })
 
         }

@@ -1,0 +1,8 @@
+<div>
+    <form novalidate class="simple-form">
+        E-mail: <input type="email" ng-model="user.email" /><br />
+        Password: <input type="password" ng-model="user.password" />male
+        <button ng-click="login(user)">Login</button>
+    </form>
+    <pre>form = {{user | json}}</pre>
+</div>

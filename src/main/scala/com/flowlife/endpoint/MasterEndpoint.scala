@@ -18,14 +18,18 @@ import spray.http.HttpChallenge
  * Time: 9:16 AM
  * To change this template use File | Settings | File Templates.
  */
-trait MasterEndpoint extends Actor with TrickEndpoint with WebappEndpoint with TrickCategoryEndpoint with HttpService {
+trait MasterEndpoint extends Actor with TrickEndpoint
+    with WebappEndpoint
+    with TrickCategoryEndpoint
+    with UserEndpoint
+    with HttpService {
 
   implicit def actorRefFactory = context
   implicit def executor = context.dispatcher
 
   implicit val liftJsonFormats = DefaultFormats.lossless + new ObjectIdSerializer
 
-  def masterRoute: Route = trickRoute ~ webappRoute ~ trickCategoryRoute
+  def masterRoute: Route = trickRoute ~ webappRoute ~ trickCategoryRoute ~ userRoute
 
   def receive = runRoute(masterRoute)
 

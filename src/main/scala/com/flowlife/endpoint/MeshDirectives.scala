@@ -26,7 +26,7 @@ trait MeshDirectives extends Directives with MongoAuthSupport {
 
   val securePost = post & mongoAuth
 
-  implicit val myRejectionHandler = RejectionHandler.fromPF {
+  implicit def myRejectionHandler = RejectionHandler.fromPF {
     case AuthenticationRequiredRejection(scheme, realm, params) :: _ =>
       complete(Forbidden, `WWW-Authenticate`(HttpChallenge(scheme, realm, params)) :: Nil,
         "The resource requires authentication, which was not supplied with the request")

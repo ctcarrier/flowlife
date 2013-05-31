@@ -26,6 +26,9 @@ trait WebappEndpoint extends HttpService with LiftJsonSupport with Logging {
       pathPrefix("home"){
             getFromResource("webapp/app/index.html")
       } ~
+      pathPrefix("admin"){
+        getFromResource("webapp/app/index-admin.html")
+      } ~
       pathPrefix("js") {
         getFromResourceDirectory("webapp/app/js")
       } ~
