@@ -1,0 +1,19 @@
+<div>
+    <form novalidate class="simple-form">
+        Name: <input type="text" ng-model="trick.name" /><br />
+        Description: <input type="text" ng-model="trick.description" />
+        Default Image: <input type="text" ng-model="trick.defaultImage" />
+        Video Link: <input type="text" ng-model="trick.videoLink" />
+        <button ng-click="saveTrick(trick)">Save</button>
+    </form>
+</div>
+
+<div id="trickDetails" class= "span8">
+    <div class="row">
+        <div class="span8">{{trick.defaultImage}}</div>
+        <div class="span4">{{trick.name}}</div>
+        <div class="span4">{{trick.category}}</div>
+    </div>
+    <div class="span8">{{trick.description}}</div>
+    <iframe width="640" height="360" src="{{trick.videoLink}}" frameborder="0" allowfullscreen></iframe>
+</div>

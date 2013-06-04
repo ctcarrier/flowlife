@@ -18,7 +18,7 @@ trait TrickDao {
   def save(l: Trick): Trick
   def get(key: String): Option[Trick]
   def getAll(category: Option[String]): Option[List[Trick]]
-
+  def update(key: String, l: Trick): Trick
 }
 
 class MongoTrickDao(defaultCollection: MongoCollection) extends TrickDao with Logging {
@@ -28,6 +28,15 @@ class MongoTrickDao(defaultCollection: MongoCollection) extends TrickDao with Lo
     val toReturn = l.copy(_id = randomId)
     val toSave = grater[Trick].asDBObject(toReturn)
     defaultCollection.insert(toSave)
+
+    toReturn
+  }
+
+  def update(key: String, l: Trick): Trick = {
+    val toReturn = l.copy(_id = Some(key))
+    val toSave = grater[Trick].asDBObject(toReturn)
+    val query = MongoDBObject("_id" -> key)
+    defaultCollection.update(query, toSave, false, false, WriteConcern.Safe)
 
     toReturn
   }

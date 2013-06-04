@@ -44,8 +44,22 @@ angular.module('myApp', ['myApp.filters', 'myApp.services', 'myApp.directives', 
 
 angular.module('adminApp', ['adminApp.filters', 'adminApp.services', 'adminApp.directives', 'ngResource', 'ngCookies']).
   config(['$routeProvider', '$locationProvider', '$httpProvider', function($routeProvider, $locationProvider, $httpProvider) {
-    $routeProvider.when('/home', {templateUrl: 'partials/admin_root.html', controller: AdminRootController});
-    $routeProvider.when('/login', {templateUrl: 'partials/admin_login.html', controller: AdminLoginController});
+    $routeProvider.when('/home', {
+        templateUrl: 'partials/admin_root.html',
+        controller: AdminRootController
+    });
+    $routeProvider.when('/login', {
+        templateUrl: 'partials/admin_login.html',
+        controller: AdminLoginController
+    });
+    $routeProvider.when('/categories/:category', {
+        templateUrl: 'partials/admin/trickCategories.html',
+        controller: AdminTrickCategoryController
+    });
+    $routeProvider.when('/tricks/:trickId', {
+        templateUrl: 'partials/admin/trick_details.html',
+        controller: AdminTrickController
+    });
     $routeProvider.otherwise({redirectTo: '/home'});
 
     var interceptor = ['$location', '$q', function($location, $q) {

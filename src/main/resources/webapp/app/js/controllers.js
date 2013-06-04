@@ -2,40 +2,52 @@
 
 /* Controllers */
 
-function TrickCategoryController($scope, $resource) {
-    var Trick = $resource('/api/tricks/:_id');
-    var TrickCategory = $resource('/api/trickCategories/:_id');
+function TrickCategoryController($scope, $resource, Trick, TrickCategory) {
 	$scope.allTricks = Trick.query({});
 	$scope.allTrickCategories = TrickCategory.query({});
 	$scope.trick = new Trick({});
 }
-TrickCategoryController.$inject = ['$scope', '$resource'];
+TrickCategoryController.$inject = ['$scope', '$resource', 'Trick', 'TrickCategory'];
 
-function TrickController($scope, $resource, $routeParams) {
-    var Trick = $resource('/api/tricks/:_id');
+function TrickController($scope, $resource, $routeParams, Trick) {
 	$scope.allTricks = Trick.query({category: $routeParams.category});
 }
 
-TrickController.$inject = ['$scope', '$resource', '$routeParams'];
+TrickController.$inject = ['$scope', '$resource', '$routeParams', 'Trick'];
 
-function TrickDetailsController($scope, $resource, $routeParams) {
-    var Trick = $resource('/api/tricks/:_id');
+function TrickDetailsController($scope, $resource, $routeParams, Trick) {
 	$scope.trick = Trick.get({_id: $routeParams.trickId});
 }
 
-TrickDetailsController.$inject = ['$scope', '$resource', '$routeParams'];
+TrickDetailsController.$inject = ['$scope', '$resource', '$routeParams', 'Trick'];
 
-function AdminRootController($scope, $resource, $routeParams, $cookieStore, $http, User) {
+function AdminRootController($scope, $resource, $routeParams, $cookieStore, $http, Trick, TrickCategory, User) {
     $http.defaults.headers.common['Authorization'] = 'Basic ' + $cookieStore.get('user');
-    var user = User.query();
-    console.log("Got " + user);
-	$scope.user = user;
+    var user = User.get({});
+	$scope.flowUser = user;
+
+    $scope.allTrickCategories = TrickCategory.query({});
+
+    $scope.getTricksByCategory = function(category) {
+        $scope.allTricks = Trick.query({category: category.name});
+    }
+
+    $scope.saveCategory = function(category) {
+        category.href = "/categories/" + category.name.toLowerCase();
+        new TrickCategory(category).$save(function(u, headers) {
+            $scope.refreshCategories();
+        });
+    }
+
+    $scope.refreshCategories = function() {
+        $scope.allTrickCategories = TrickCategory.query({});
+    }
 }
 
-AdminRootController.$inject = ['$scope', '$resource', '$routeParams', '$cookieStore', '$http', User];
+AdminRootController.$inject = ['$scope', '$resource', '$routeParams', '$cookieStore', '$http', 'Trick', 'TrickCategory', 'User'];
 
-function AdminLoginController($scope, $resource, $routeParams, $cookieStore, $location, User) {
-
+function AdminLoginController($scope, $resource, $routeParams, $cookieStore, $location, $User) {
+    var User = $resource('/api/users/:email');
 	$scope.user = User.query();
 
 	$scope.login = function(user) {
@@ -48,4 +60,44 @@ function AdminLoginController($scope, $resource, $routeParams, $cookieStore, $lo
 	}
 }
 
-AdminLoginController.$inject = ['$scope', '$resource', '$routeParams', '$cookieStore', '$location', User];
+AdminLoginController.$inject = ['$scope', '$resource', '$routeParams', '$cookieStore', '$location', 'User'];
+
+function AdminTrickCategoryController($scope, $resource, $routeParams, $cookieStore, $http, Trick, TrickCategory, User) {
+    $http.defaults.headers.common['Authorization'] = 'Basic ' + $cookieStore.get('user');
+    var user = User.get({});
+    $scope.flowUser = user;
+    $scope.currentCategory = $routeParams.category;
+
+    $scope.allTricks = Trick.query({category: $scope.currentCategory});
+
+    $scope.saveTrick = function(trick) {
+        trick.category = $scope.currentCategory;
+        new Trick(trick).$save(function(u, headers) {
+            $scope.refreshTricks();
+        });
+    }
+
+    $scope.refreshTricks = function() {
+        $scope.allTricks = Trick.query({category: $scope.currentCategory});
+    }
+}
+
+AdminTrickCategoryController.$inject = ['$scope', '$resource', '$routeParams', '$cookieStore', '$http', 'Trick', 'TrickCategory', 'User'];
+
+function AdminTrickController($scope, $resource, $routeParams, $cookieStore, $http, Trick, TrickCategory, User) {
+    $http.defaults.headers.common['Authorization'] = 'Basic ' + $cookieStore.get('user');
+    var user = User.get({});
+    $scope.flowUser = user;
+    $scope.currentId = $routeParams.trickId;
+
+    $scope.trick = Trick.get({_id: $scope.currentId});
+
+    $scope.saveTrick = function(trick) {
+        trick._id = $scope.currentId;
+        new Trick(trick).$update(function(u, headers) {
+            $scope.refreshTricks();
+        });
+    }
+}
+
+AdminTrickController.$inject = ['$scope', '$resource', '$routeParams', '$cookieStore', '$http', 'Trick', 'TrickCategory', 'User'];
