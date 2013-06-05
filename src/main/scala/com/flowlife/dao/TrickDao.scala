@@ -19,6 +19,7 @@ trait TrickDao {
   def get(key: String): Option[Trick]
   def getAll(category: Option[String]): Option[List[Trick]]
   def update(key: String, l: Trick): Trick
+  def delete(key: String): Boolean
 }
 
 class MongoTrickDao(defaultCollection: MongoCollection) extends TrickDao with Logging {
@@ -41,8 +42,16 @@ class MongoTrickDao(defaultCollection: MongoCollection) extends TrickDao with Lo
     toReturn
   }
 
+  def delete(key: String): Boolean = {
+    logger.info("Deleting: " + key)
+    val query = MongoDBObject("_id" -> key)
+    val toReturn = defaultCollection.remove(query)
+
+    true
+  }
+
   def get(key: String): Option[Trick] = {
-    logger.info("In Trick DAO")
+    logger.info("In Trick DAO: " + key)
 
     val builder = MongoDBObject.newBuilder
     builder += ("_id" -> key)

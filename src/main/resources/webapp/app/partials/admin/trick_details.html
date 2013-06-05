@@ -1,19 +1,28 @@
-<div>
+<div class="span12">
     <form novalidate class="simple-form">
         Name: <input type="text" ng-model="trick.name" /><br />
-        Description: <input type="text" ng-model="trick.description" />
-        Default Image: <input type="text" ng-model="trick.defaultImage" />
-        Video Link: <input type="text" ng-model="trick.videoLink" />
-        <button ng-click="saveTrick(trick)">Save</button>
+        Description: <input type="text" ng-model="trick.description" /><br />
+        Default Image: <input type="text" ng-model="trick.defaultImage" /><br />
+        Video Link: <input type="text" ng-model="trick.videoLink" /><br />
+        <button ng-click="saveTrick(trick)">Save</button><br />
+        <button ng-click="deleteTrick(trick)">Delete</button>
     </form>
 </div>
-
-<div id="trickDetails" class= "span8">
+<div class="span12">
+    <hr class="dark">
+</div>
+<div id="trickDetails" class="span12">
     <div class="row">
-        <div class="span8">{{trick.defaultImage}}</div>
-        <div class="span4">{{trick.name}}</div>
-        <div class="span4">{{trick.category}}</div>
+        <div class="span4">
+            <h2>{{trick.name}}</h2><br />
+            {{trick.description}}
+        </div>
+        <div class="span4 offset2"><img src="{{trick.defaultImage}}" /></div>
     </div>
-    <div class="span8">{{trick.description}}</div>
-    <iframe width="640" height="360" src="{{trick.videoLink}}" frameborder="0" allowfullscreen></iframe>
+    <hr class="dark">
+    <div class="row">
+        <div class="span8">
+            <iframe width="640" height="360" src="{{trick.videoLink}}" frameborder="0" allowfullscreen></iframe>
+        </div>
+    </div>
 </div>

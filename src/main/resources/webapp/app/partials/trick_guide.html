@@ -1,0 +1,8 @@
+<div id="trickCategories span8">
+    <div class="span3" ng-repeat="trickCategory in allTrickCategories">
+        <a href="#{{trickCategory.href}}">
+            <div class="trickCategoryHeader">{{trickCategory.name}}</div>
+            <div class="trickCategoryImage"><img src="{{trickCategory.defaultImage}}" /></div>
+        </a>
+    </div>
+</div>

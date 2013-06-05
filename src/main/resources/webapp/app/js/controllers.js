@@ -94,7 +94,14 @@ function AdminTrickController($scope, $resource, $routeParams, $cookieStore, $ht
 
     $scope.saveTrick = function(trick) {
         trick._id = $scope.currentId;
-        new Trick(trick).$update(function(u, headers) {
+        new Trick(trick).$save(function(u, headers) {
+            $scope.refreshTricks();
+        });
+    }
+
+    $scope.deleteTrick = function(trick) {
+        trick._id = $scope.currentId;
+        new Trick(trick).$delete(function(u, headers) {
             $scope.refreshTricks();
         });
     }

@@ -1,4 +1,4 @@
-<div>
+<div class="span12">
     <form novalidate class="simple-form">
         Name: <input type="text" ng-model="newTrick.name" /><br />
         Description: <input type="text" ng-model="newTrick.description" />
@@ -6,7 +6,6 @@
         Video Link: <input type="text" ng-model="newTrick.videoLink" />
         <button ng-click="saveTrick(newTrick)">Save</button>
     </form>
-    <pre>form = {{newTrick | json}}</pre>
 </div>
 <div id="trickCategories span8">
     <div class="span2" ng-repeat="trick in allTricks">

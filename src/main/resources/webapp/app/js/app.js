@@ -4,7 +4,15 @@
 angular.module('myApp', ['myApp.filters', 'myApp.services', 'myApp.directives', 'ngResource', 'ngCookies']).
   config(['$routeProvider', '$locationProvider', '$httpProvider', function($routeProvider, $locationProvider, $httpProvider) {
     $routeProvider.when('/', {
-        templateUrl: 'partials/partial2.html',
+        templateUrl: 'partials/root.html',
+        controller: TrickCategoryController
+    });
+    $routeProvider.when('/guide', {
+        templateUrl: 'partials/trick_guide.html',
+        controller: TrickCategoryController
+    });
+    $routeProvider.when('/gallery', {
+        templateUrl: 'partials/gallery.html',
         controller: TrickCategoryController
     });
     $routeProvider.when('/categories/:category', {
@@ -45,11 +53,11 @@ angular.module('myApp', ['myApp.filters', 'myApp.services', 'myApp.directives', 
 angular.module('adminApp', ['adminApp.filters', 'adminApp.services', 'adminApp.directives', 'ngResource', 'ngCookies']).
   config(['$routeProvider', '$locationProvider', '$httpProvider', function($routeProvider, $locationProvider, $httpProvider) {
     $routeProvider.when('/home', {
-        templateUrl: 'partials/admin_root.html',
+        templateUrl: 'partials/admin/root.html',
         controller: AdminRootController
     });
     $routeProvider.when('/login', {
-        templateUrl: 'partials/admin_login.html',
+        templateUrl: 'partials/admin/login.html',
         controller: AdminLoginController
     });
     $routeProvider.when('/categories/:category', {

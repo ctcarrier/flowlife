@@ -1,0 +1,21 @@
+<p>
+<h1>Welcome {{flowUser.email}}</h1>
+</p>
+Manage Trick Categories
+
+<div>
+    <form novalidate class="simple-form">
+        Name: <input type="text" ng-model="newCategory.name" /><br />
+        Default Image: <input type="text" ng-model="newCategory.defaultImage" />
+        <button ng-click="saveCategory(newCategory)">Save</button>
+    </form>
+</div>
+<p />
+<div id="trickCategories span8">
+    <div class="span3" ng-repeat="trickCategory in allTrickCategories">
+        <a href="#{{trickCategory.href}}">
+            <div class="trickCategoryHeader">{{trickCategory.name}}</div>
+            <div class="trickCategoryImage"><img src="{{trickCategory.defaultImage}}" /></div>
+        </a>
+    </div>
+</div>

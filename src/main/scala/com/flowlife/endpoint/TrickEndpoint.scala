@@ -33,9 +33,17 @@ trait TrickEndpoint extends HttpService with MeshDirectives with LiftJsonSupport
         get {
           getTrick(key)
         } ~
-        put {
+        post {
+          logger.info("In post endpoint")
           entity(as[Trick]) {
             update(key)
+          }
+        } ~
+        delete {
+          respondWithStatus(StatusCodes.NoContent) {
+            logger.info("In delete endpoint")
+            //deleteTrick(key)
+            complete("")
           }
         }
       } ~
@@ -62,5 +70,9 @@ trait TrickEndpoint extends HttpService with MeshDirectives with LiftJsonSupport
   private def getAllTricks: Option[String] => Route = { category =>
     logger.info("GETTING ALL TRICKS")
     complete(trickDao.getAll(category))
+  }
+
+  private def deleteTrick(key: String) = {
+    trickDao.delete(key)
   }
 }

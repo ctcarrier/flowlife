@@ -1,9 +1,15 @@
-<div id="trickDetails span8">
+<div id="trickDetails">
     <div class="row">
-        <div class="span8">{{trick.defaultImage}}</div>
-        <div class="span4">{{trick.name}}</div>
-        <div class="span4">{{trick.category}}</div>
+        <div class="span4">
+            <h2>{{trick.name}}</h2><br />
+            {{trick.description}}
+        </div>
+        <div class="span4 offset2"><img src="{{trick.defaultImage}}" /></div>
     </div>
-    <div class="span8">{{trick.description}}</div>
-    <iframe width="640" height="360" src="{{trick.videoLink}}" frameborder="0" allowfullscreen></iframe>
+    <hr class="dark">
+    <div class="row">
+        <div class="span8">
+            <iframe width="640" height="360" src="{{trick.videoLink}}" frameborder="0" allowfullscreen></iframe>
+        </div>
+    </div>
 </div>
