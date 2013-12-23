@@ -15,11 +15,7 @@ function TrickController($scope, $resource, $routeParams, Trick) {
 
 TrickController.$inject = ['$scope', '$resource', '$routeParams', 'Trick'];
 
-function TrickDetailsController($scope, $resource, $routeParams, Trick) {
-	$scope.trick = Trick.get({_id: $routeParams.trickId});
-}
 
-TrickDetailsController.$inject = ['$scope', '$resource', '$routeParams', 'Trick'];
 
 function AdminRootController($scope, $resource, $routeParams, $cookieStore, $http, Trick, TrickCategory, User) {
     $http.defaults.headers.common['Authorization'] = 'Basic ' + $cookieStore.get('user');
@@ -84,7 +80,7 @@ function AdminTrickCategoryController($scope, $resource, $routeParams, $cookieSt
 
 AdminTrickCategoryController.$inject = ['$scope', '$resource', '$routeParams', '$cookieStore', '$http', 'Trick', 'TrickCategory', 'User'];
 
-function AdminTrickController($scope, $resource, $routeParams, $cookieStore, $http, Trick, TrickCategory, User) {
+function AdminTrickController($scope, $resource, $routeParams, $cookieStore, $http, $location, Trick, TrickCategory, User) {
     $http.defaults.headers.common['Authorization'] = 'Basic ' + $cookieStore.get('user');
     var user = User.get({});
     $scope.flowUser = user;
@@ -101,10 +97,11 @@ function AdminTrickController($scope, $resource, $routeParams, $cookieStore, $ht
 
     $scope.deleteTrick = function(trick) {
         trick._id = $scope.currentId;
+        $scope.currentCategory = trick.category;
         new Trick(trick).$delete(function(u, headers) {
-            $scope.refreshTricks();
+            $location.path('/categories/' + $scope.currentCategory);
         });
     }
 }
 
-AdminTrickController.$inject = ['$scope', '$resource', '$routeParams', '$cookieStore', '$http', 'Trick', 'TrickCategory', 'User'];
+AdminTrickController.$inject = ['$scope', '$resource', '$routeParams', '$cookieStore', '$http', '$location', 'Trick', 'TrickCategory', 'User'];

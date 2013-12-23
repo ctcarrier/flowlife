@@ -30,20 +30,20 @@ trait TrickEndpoint extends HttpService with MeshDirectives with LiftJsonSupport
         }
       } ~
       path(PathElement) { key =>
-        get {
-          getTrick(key)
+        get { ctx =>
+          ctx.complete(getTrick(key))
         } ~
-        post {
+        post { ctx =>
           logger.info("In post endpoint")
           entity(as[Trick]) {
             update(key)
           }
         } ~
         delete {
-          respondWithStatus(StatusCodes.NoContent) {
+          respondWithStatus(StatusCodes.NoContent) { ctx =>
             logger.info("In delete endpoint")
-            //deleteTrick(key)
-            complete("")
+            deleteTrick(key)
+            ctx.complete("")
           }
         }
       } ~
@@ -64,7 +64,7 @@ trait TrickEndpoint extends HttpService with MeshDirectives with LiftJsonSupport
 
   private def getTrick(key: String) = {
     logger.info("GETTING TRICK")
-    complete(trickDao.get(key))
+    trickDao.get(key)
   }
 
   private def getAllTricks: Option[String] => Route = { category =>
